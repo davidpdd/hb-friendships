@@ -33,7 +33,7 @@ for(Boat__c boat : [SELECT Id,Name, BoatType__r.Name FROM Boat__c]){
 List<AggregateResult> result = [SELECT Count(Id) total, BoatType__r.Name FROM Boat__c GROUP BY BoatType__r.Name];
 Map<String, Integer> mappedBoatPerType = new Map<String, Integer> ();
 for(AggregateResult ar : result){
-    mappedBoatPerType.put(ar.get('Name'), ar.get('total;);
+    mappedBoatPerType.put(ar.get('Name'), ar.get('total'));
 }
 System.debug(result);
 
