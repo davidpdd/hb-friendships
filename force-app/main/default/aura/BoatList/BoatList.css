@@ -1,2 +1,10 @@
-.THIS {
+.THIS .custom-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.THIS .custom-item {
+    display: flex;
+    flex-direction: column;
 }

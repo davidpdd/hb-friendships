@@ -8,7 +8,6 @@ public with sharing class BoatsSelector {
     return [SELECT Id, Name FROM Boat__c WHERE BoatType__r.Name = :type];
   }
  
-
    // ---------- Parent  Parent__r.Field
    // --------------------------------------------------- FROM SObject 
    // --------- (Subquery) (SELECT Id FROM ChildRelationShipName)
