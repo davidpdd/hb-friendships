@@ -1,5 +1,5 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global"
-                controller="FriendShipsController">
+                controller="BoatDataService">
 
   <!-- Afficher la liste de tous les bateaux -->
   <aura:attribute name="boats" type="Boat__c[]" description="The list of boats"/>
@@ -14,8 +14,7 @@
       <!-- Bateau -->
       <lightning:layoutItem size="4" largeDeviceSize="4" smallDeviceSize="6">
         <div class="slds-card slds-p-around_small slds-m-around_x-small custom-item">
-          <div class="slds-text-title_bold">{!bateau.Name}</div>
-          <div class="slds-text-body_small">{!bateau.Id}</div>
+          <c:boattile boat="{!bateau}"/>
           <!-- Iteration sur les maintenances du bateau -->
           <ul>
             <aura:iteration items="{!bateau.Maintenances__r}" var="toto">

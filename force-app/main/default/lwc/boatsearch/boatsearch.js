@@ -1,6 +1,6 @@
 import {LightningElement, wire} from 'lwc'
 import getBoatTypes from "@salesforce/apex/BoatDataService.getBoatTypes"
-// import getBoats from ...
+import getBoats from "@salesforce/apex/BoatDataService.getBoats"
 
 export default class BoatSearch extends LightningElement {
 
@@ -12,22 +12,32 @@ export default class BoatSearch extends LightningElement {
   searchOptions = [
     {
       label: 'Tous les types',
-      value: ''
-    }
+      value: '',
+    },
   ]
 
   // TODO : récupérer la liste des types de bateaux pour alimenter la picklist
   @wire(getBoatTypes)
   boatTypes({error, data}) {
-    // handle data
-    // TODO: transform the data received to fill the list of search options
-
-    // handle error
+    if (data) {
+      this.searchOptions = data.map(type => ({label: type.Name, value: type.Id}))
+      this.searchOptions.unshift({label: 'All Types', value: ''})
+    } else if (error) {
+      console.error(error)
+    }
   }
 
   // TODO: créer une méthode pour récupérer la liste des bateaux au clic du bouton
-  handleBoatSearch() {
-    // TODO : call apex method
+  handleBoatSearch(event) {
+    getBoats({boatTypeId: this.selectedBoatTypeId})
+      .then(data => {
+        this.boatList = data
+      }).catch(error => console.error(error))
+      .finally(() => console.log(this.boatList))
+  }
+
+  handleSearchOptionChange(event) {
+    this.selectedBoatTypeId = event.detail.value
   }
 
 }

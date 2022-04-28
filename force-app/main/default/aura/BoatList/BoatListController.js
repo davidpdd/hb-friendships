@@ -1,7 +1,9 @@
 ({
   doInit: function (component, event, helper) {
-    console.log('init called')
-    const action = component.get("c.getAllBoats")
+    const action = component.get("c.getBoats")
+    action.setParams({
+      boatTypeId: ''
+    })
     action.setCallback(this, function (response) {
       // verifie si tout s'est bien passe
       const state = response.getState()

@@ -7,11 +7,23 @@
       <!-- TODO: créer une lightning card avec un titre et une icone-->
       <lightning-card>
 
-        TODO: ajouter la picklist
+        <lightning-combobox options={searchOptions}
+                            variant="label-hidden"
+                            value={selectedBoatTypeId}
+                            class="slds-align-middle"
+                            label="Boat type"
+                            onchange={handleSearchOptionChange}>
+        </lightning-combobox>
       <!-- TODO: ajouter une picklist qui affiche la liste des types de bateaux -->
 
-        TODO: ajouter un bouton
       <!-- TODO: ajouter un bouton qui lance la recherche des bateaux -->
+        <lightning-button
+                onclick={handleBoatSearch}
+                label="recherche"
+                icon-name="utility:search"
+                variant="brand"
+        >
+        </lightning-button>
       </lightning-card>
 
     </lightning-layout-item>
@@ -19,9 +31,15 @@
     <!-- Lightning layout for search results -->
     <lightning-layout-item size="12">
 
+
       <!-- TODO: ajouter un spinner si une recherche est en cours -->
 
       <!-- TODO: afficher la liste des bateaux issus de la recherche -->
+      <template for:each={boatList} for:item="boat" for:index="i">
+        <div key={boat.Id}>
+          <c-boattile boat={boat} selected-boat-id=""></c-boattile>
+        </div>
+      </template>
 
     </lightning-layout-item>
   </lightning-layout>
