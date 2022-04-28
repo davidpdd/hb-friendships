@@ -1,11 +1,18 @@
 <!-- Boatsearch -->
 <template>
-  <lightning-layout multiple-rows>
-    <!-- Lightning layout for search criteria-->
-    <lightning-layout-item size="12">
 
-      <!-- TODO: créer une lightning card avec un titre et une icone-->
-      <lightning-card>
+  <div>selected : {selectedBoatId}</div>
+  <div if:true={errors}>
+    Une erreur est survenue lors de la récupération des types de bateaux.
+    Contactez votre administrateur et donnez-lui l'erreur suivante :
+    {errors}
+  </div>
+  <!-- TODO: créer une lightning card avec un titre et une icone-->
+  <lightning-card>
+    <lightning-layout multiple-rows>
+
+      <!-- Lightning layout for search criteria-->
+      <lightning-layout-item size="9">
 
         <lightning-combobox options={searchOptions}
                             variant="label-hidden"
@@ -14,9 +21,10 @@
                             label="Boat type"
                             onchange={handleSearchOptionChange}>
         </lightning-combobox>
-      <!-- TODO: ajouter une picklist qui affiche la liste des types de bateaux -->
-
-      <!-- TODO: ajouter un bouton qui lance la recherche des bateaux -->
+        <!-- TODO: ajouter une picklist qui affiche la liste des types de bateaux -->
+      </lightning-layout-item>
+      <lightning-layout-item size="3">
+        <!-- TODO: ajouter un bouton qui lance la recherche des bateaux -->
         <lightning-button
                 onclick={handleBoatSearch}
                 label="recherche"
@@ -24,25 +32,30 @@
                 variant="brand"
         >
         </lightning-button>
-      </lightning-card>
 
-    </lightning-layout-item>
+      </lightning-layout-item>
 
-    <!-- Lightning layout for search results -->
-    <lightning-layout-item size="12">
+      <!-- Lightning layout for search results -->
+      <lightning-layout-item size="12">
 
+        <lightning-layout multiple-rows="true">
 
-      <!-- TODO: ajouter un spinner si une recherche est en cours -->
+          <!-- TODO: ajouter un spinner si une recherche est en cours -->
+          <lightning-spinner if:true={isLoading}></lightning-spinner>
 
-      <!-- TODO: afficher la liste des bateaux issus de la recherche -->
-      <template for:each={boatList} for:item="boat" for:index="i">
-        <div key={boat.Id}>
-          <c-boattile boat={boat} selected-boat-id=""></c-boattile>
-        </div>
-      </template>
-
-    </lightning-layout-item>
-  </lightning-layout>
+          <!-- TODO: afficher la liste des bateaux issus de la recherche -->
+          <template for:each={boatList} for:item="boat">
+            <lightning-layout-item key={boat.Id} size="4" large-device-size="4" small-device-size="6">
+              <c-boattile boat={boat}
+                          data-record-id={boat.Id}
+                          onclick={handleClick}
+                          selected-boat-id={selectedBoatTypeId}></c-boattile>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
 
 
 </template>
