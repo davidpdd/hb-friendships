@@ -1,8 +1,8 @@
 public with sharing class BoatDataService {
 
-    public static final String LENGTH_TYPE = 'Length'; 
-    public static final String PRICE_TYPE = 'Price'; 
-    public static final String TYPE_TYPE = 'Type'; 
+    public static final String LENGTH_TYPE = 'Length';
+    public static final String PRICE_TYPE = 'Price';
+    public static final String TYPE_TYPE = 'Type';
 
     public static List<Boat__c> getBoats(String boatTypeId) {
         // Without an explicit boatTypeId, the full list is desired
@@ -22,7 +22,7 @@ public with sharing class BoatDataService {
         List<Boat__c> similarBoats = new List<Boat__c>();
         List<Boat__c> parentBoat = [SELECT Id, Length__c, Price__c, BoatType__c, BoatType__r.Name
                                     FROM Boat__c
-                                    WHERE Id = :boatId 
+                                    WHERE Id = :boatId
                                     WITH SECURITY_ENFORCED];
         if (parentBoat.isEmpty()) {
             return similarBoats;
@@ -60,6 +60,7 @@ public with sharing class BoatDataService {
         return similarBoats;
     }
 
+    @AuraEnabled(Cacheable=true)
     public static List<BoatType__c> getBoatTypes() {
         return [SELECT Name, Id FROM BoatType__c WITH SECURITY_ENFORCED ORDER BY Name];
     }
@@ -102,7 +103,7 @@ public with sharing class BoatDataService {
             JSON.serialize(data),
             List<Boat__c>.class
         );
-        
+
         update boatsForUpdate;
         return 'Success: Boats updated successfully';
     }
