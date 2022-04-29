@@ -50,6 +50,7 @@ export default class BoatSearch extends LightningElement {
 
   handleSearchOptionChange(event) {
     this.selectedBoatTypeId = event.detail.value
+    this.handleBoatSearch();
   }
 
   handleClick(event){

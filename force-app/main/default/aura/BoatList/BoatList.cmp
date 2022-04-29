@@ -10,7 +10,6 @@
   <lightning:layout multipleRows="true" horizontalAlign="center">
     <!-- Iteration sur les bateaux -->
     <aura:iteration items="{!v.boats}" var="bateau">
-
       <!-- Bateau -->
       <lightning:layoutItem size="4" largeDeviceSize="4" smallDeviceSize="6">
         <div class="slds-card slds-p-around_small slds-m-around_x-small custom-item">
