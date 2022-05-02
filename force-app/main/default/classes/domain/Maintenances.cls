@@ -10,7 +10,7 @@ public with sharing class Maintenances {
     Set<Id> boatIds = new Set<Id>();
     List<Maintenance__c> maintenancesInProgress = new List<Maintenance__c>();
     for (Maintenance__c maintenance : maintenances) {
-      if (maintenance.Statut__c == 'En cours') {
+      if (maintenance.Statut__c == 'En cours' && maintenance.Boat__c != null) {
         boatIds.add(maintenance.Boat__c);
         maintenancesInProgress.add(maintenance);
       }
@@ -35,16 +35,17 @@ public with sharing class Maintenances {
       // on récupère le bateau avec les maintenances en cours (enfants)
       // si on trouve une maintenance, c'est qu'il y a deja une maintenance en cours, donc on
       // peut ajouter notre erreur
+      Boat__c boatAssocie = boatsWithMaintenances.get(maintenance.Boat__c);
+      List<Maintenance__c> maintenancesDuBateauAssocie = boatAssocie.Maintenances__r;
       if (
-        !boatsWithMaintenances.get(maintenance.Boat__c)
-          .Maintenances__r.isEmpty()
+        !maintenancesDuBateauAssocie.isEmpty()
       ) {
         maintenance.addError('Une maintenance est déjà en cours sur ce bateau');
       }
     }
   }
 
-  public static void setName(List<Maintenance__c> maintenances) {
+  public void setName() {
     // creation du set pour collecter les ids
     Set<Id> boatIds = new Set<Id>();
 
