@@ -1,3 +1,40 @@
 <!-- Boat Search By Name -->
 <template>
+  <!-- Layout principal de la page -->
+  <lightning-layout multiple-rows>
+    <lightning-layout-item size="12" class="slds-is-relative">
+      <lightning-card icon-name="utility:search" title="Recherche">
+        <div class="slds-align_absolute-center">
+          <lightning-input
+            label="Nom du bateau"
+            onchange={handleSearch}
+          ></lightning-input>
+        </div>
+      </lightning-card>
+    </lightning-layout-item>
+    <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Chargement en cours"
+          variant="brand"
+        ></lightning-spinner>
+      </template>
+      <div class="slds-card slds-scrollable_y">
+        <lightning-layout horizontal-align="center" multiple-rows>
+          <template for:each={filteredBoats} for:item="boat">
+            <lightning-layout-item
+              key={boat.Id}
+              padding="around-small"
+              size="12"
+              small-device-size="6"
+              medium-device-size="4"
+              large-device-size="2"
+            >
+              <c-boattile selected-boat-id="" boat={boat}></c-boattile>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </div>
+    </lightning-layout-item>
+  </lightning-layout>
 </template>
