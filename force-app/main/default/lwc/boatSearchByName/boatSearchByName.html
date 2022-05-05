@@ -2,6 +2,7 @@
 <template>
   <!-- Layout principal de la page -->
   <lightning-layout multiple-rows>
+    <!-- Ligne pour la recherche  -->
     <lightning-layout-item size="12" class="slds-is-relative">
       <lightning-card icon-name="utility:search" title="Recherche">
         <div class="slds-align_absolute-center">
@@ -12,6 +13,7 @@
         </div>
       </lightning-card>
     </lightning-layout-item>
+    <!-- Ligne pour l'affichage  -->
     <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
       <template if:true={isLoading}>
         <lightning-spinner
@@ -22,6 +24,7 @@
       <div class="slds-card slds-scrollable_y">
         <lightning-layout horizontal-align="center" multiple-rows>
           <template for:each={filteredBoats} for:item="boat">
+            <!-- Tres important de mettre la cle -->
             <lightning-layout-item
               key={boat.Id}
               padding="around-small"
@@ -30,7 +33,13 @@
               medium-device-size="4"
               large-device-size="2"
             >
-              <c-boattile selected-boat-id="" boat={boat}></c-boattile>
+              <!-- Composant enfant avec lequel on va communiquer (de parent a enfant et de
+              l'enfant vers le parent  -->
+              <c-boattile
+                onboatselect={handleNavigationToBoat}
+                selected-boat-id=""
+                boat={boat}
+              ></c-boattile>
             </lightning-layout-item>
           </template>
         </lightning-layout>
